@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,30 +24,42 @@ public class CategoriaResource {
 	private CategoriaService categoriaService;
 	
 	@GetMapping
-	public ResponseEntity<List<Categoria>> listar(){	
+	public ResponseEntity<List<Categoria>> listar(){
 		
-	 return ResponseEntity.status(HttpStatus.OK).body(this.categoriaService.listar());
-	 
+		List<Categoria> listagem = this.categoriaService.listarCategoria();
+	
+		if (listagem.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		} else {
+			return ResponseEntity.status(HttpStatus.OK).body(listagem);
+		}
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Categoria> categoriaPorId(@PathVariable Long id){
 		
-		return ResponseEntity.status(HttpStatus.OK).body(categoriaService.categoriaPorCodigo(id));
+		return ResponseEntity.status(HttpStatus.OK).body(this.categoriaService.categoriaPorCodigo(id));
 		
 	}
 	
 	@PostMapping
 	public ResponseEntity<Categoria> cadastrar(@RequestBody Categoria categoria) {
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body(this.categoriaService.cadastrar(categoria));
+		return ResponseEntity.status(HttpStatus.CREATED).body(this.categoriaService.cadastrarCategoria(categoria));
 		
 	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<Categoria> atualizar(@PathVariable Long id, @RequestBody Categoria categoriaAtualizada){
 
-		return ResponseEntity.status(HttpStatus.OK).body(categoriaService.atualizar(id, categoriaAtualizada));
+		return ResponseEntity.status(HttpStatus.OK).body(this.categoriaService.atualizarCategoria(id, categoriaAtualizada));
+		
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Categoria> removerCategoria(@PathVariable Long id){
+		
+		return ResponseEntity.status(HttpStatus.OK).body(this.categoriaService.removerCategoria(id));
 		
 	}
 	

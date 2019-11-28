@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.money.exception.CategoriaNaoEncontradaException;
 import com.money.exception.CategoriaRepetidaException;
-import com.money.exception.NaoExisteCategoriaException;
 import com.money.model.Categoria;
 import com.money.repository.CategoriaRepository;
 
@@ -18,28 +17,22 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 	
-	public List<Categoria> listar(){
-		List<Categoria> listagem = this.categoriaRepository.findAll();
-		if (!listagem.isEmpty()) {
-			return listagem;
-		} else {
-			throw new NaoExisteCategoriaException();
-		}
+	public List<Categoria> listarCategoria(){
+		return this.categoriaRepository.findAll();
 	}
 	
-	public Categoria cadastrar(Categoria categoria) {
+	public Categoria cadastrarCategoria(Categoria categoria) {
 		
-		if(this.categoriaRepository.existsByName(categoria.getNome())) {
-			return this.categoriaRepository.save(categoria);
-		} else {
+		if(this.categoriaRepository.existsByNome(categoria.getNome())) {
 			throw new CategoriaRepetidaException();
+		} else {
+			return this.categoriaRepository.save(categoria);
 		}
-		
 		
 	}
 	
 	public Categoria categoriaPorCodigo(Long id) {
-		Optional<Categoria> categoriaAchada = categoriaRepository.findById(id);
+		Optional<Categoria> categoriaAchada = this.categoriaRepository.findById(id);
 		Categoria categoriaProcurada = null;
 		if(categoriaAchada.isPresent()) {
 			categoriaProcurada = categoriaAchada.get();
@@ -50,8 +43,8 @@ public class CategoriaService {
 		return categoriaProcurada;
 	}
 	
-	public Categoria atualizar(Long id, Categoria categoriaAtualizada) {
-		Optional<Categoria> categoriaRetornada = categoriaRepository.findById(id);
+	public Categoria atualizarCategoria(Long id, Categoria categoriaAtualizada) {
+		Optional<Categoria> categoriaRetornada = this.categoriaRepository.findById(id);
 		Categoria categoriaPersistida = null;
 		if (categoriaRetornada.isPresent()) {
 			categoriaPersistida = categoriaRetornada.get();
@@ -60,5 +53,17 @@ public class CategoriaService {
 			throw new CategoriaNaoEncontradaException();
 		}
 		return this.categoriaRepository.save(categoriaPersistida);
+	}
+	
+	public Categoria removerCategoria(Long id) {
+		Optional<Categoria> categoriaAchada = this.categoriaRepository.findById(id);
+		Categoria categoriaRetorno = null;
+		if(categoriaAchada.isPresent()) {
+			categoriaRetorno = categoriaAchada.get();
+			this.categoriaRepository.deleteById(id);
+		} else {
+			throw new CategoriaNaoEncontradaException();
+		}
+		return categoriaRetorno;
 	}
 }
