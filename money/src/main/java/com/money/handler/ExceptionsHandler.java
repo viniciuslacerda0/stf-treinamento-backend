@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.money.exception.CategoriaNaoEncontradaException;
+import com.money.exception.NaoExisteCategoriaException;
 
 public class ExceptionsHandler extends ResponseEntityExceptionHandler {
 	
@@ -13,5 +14,10 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
 	public ResponseEntity<Object> HandleCategoriaNaoEncontradaException(){
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
-
+	
+	@ExceptionHandler(NaoExisteCategoriaException.class)
+	public ResponseEntity<Object> HandleNaoExisteCategoriaException(){
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
+	
 }

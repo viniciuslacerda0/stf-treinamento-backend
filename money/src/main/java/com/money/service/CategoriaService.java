@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.money.exception.CategoriaNaoEncontradaException;
+import com.money.exception.CategoriaRepetidaException;
+import com.money.exception.NaoExisteCategoriaException;
 import com.money.model.Categoria;
 import com.money.repository.CategoriaRepository;
 
@@ -17,17 +19,35 @@ public class CategoriaService {
 	private CategoriaRepository categoriaRepository;
 	
 	public List<Categoria> listar(){
-		return this.categoriaRepository.findAll();
+		List<Categoria> listagem = this.categoriaRepository.findAll();
+		if (!listagem.isEmpty()) {
+			return listagem;
+		} else {
+			throw new NaoExisteCategoriaException();
+		}
 	}
 	
 	public Categoria cadastrar(Categoria categoria) {
-		return this.categoriaRepository.save(categoria);
+		
+		if(this.categoriaRepository.existsByName(categoria.getNome())) {
+			return this.categoriaRepository.save(categoria);
+		} else {
+			throw new CategoriaRepetidaException();
+		}
+		
+		
 	}
 	
-	public Optional<Categoria> categoriaPorCodigo(Long id) {
-		Optional<Categoria> categoriaRetornada = categoriaRepository.findById(id);
+	public Categoria categoriaPorCodigo(Long id) {
+		Optional<Categoria> categoriaAchada = categoriaRepository.findById(id);
+		Categoria categoriaProcurada = null;
+		if(categoriaAchada.isPresent()) {
+			categoriaProcurada = categoriaAchada.get();
+		} else {
+			throw new CategoriaNaoEncontradaException();
+		}
 		
-		return this.categoriaRepository.findById(id);
+		return categoriaProcurada;
 	}
 	
 	public Categoria atualizar(Long id, Categoria categoriaAtualizada) {
