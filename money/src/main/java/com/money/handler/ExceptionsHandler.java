@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.money.exception.CategoriaNaoEncontradaException;
+import com.money.exception.CategoriaRepetidaException;
 import com.money.exception.NaoExisteCategoriaException;
 
 public class ExceptionsHandler extends ResponseEntityExceptionHandler {
@@ -18,6 +19,11 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(NaoExisteCategoriaException.class)
 	public ResponseEntity<Object> HandleNaoExisteCategoriaException(){
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
+	
+	@ExceptionHandler(CategoriaRepetidaException.class)
+	public ResponseEntity<Object> HandleCategoriaRepetidaException(){
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
 	
 }
