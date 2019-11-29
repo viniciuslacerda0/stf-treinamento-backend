@@ -14,6 +14,6 @@ INSERT INTO pessoa (nome,ativo) values("João", 1);
 INSERT INTO pessoa (nome,ativo) values("Maria", 0);
 INSERT INTO pessoa (nome,ativo) values("Pablo do Arrocha", 0);
 INSERT INTO pessoa (nome,ativo) values("Zé da paçoca",1);
-INSERT INTO pessoa (nome,logradouro, bairro, cep, cidade, numero,ativo) values("Wesley Safadão","Ali na esquina", "Centro", "58400000", "Campina Grande", 12, 0);
+INSERT INTO pessoa (nome,logradouro, bairro, cep, cidade, numero, complemento,ativo) values("Wesley Safadão","Ali na esquina", "Centro", "58400000", "Campina Grande","na rua", 12, 0);
 INSERT INTO pessoa (nome,logradouro, bairro, cep, cidade, numero,ativo) values("Rihanna","barzin", "Cruzeiro", "58415500", "Campina Grande", 219, 1);
 INSERT INTO pessoa (nome,logradouro, bairro, cep, cidade, numero,ativo) values("Messi","estacionamento", "Catolé", "5840030", "Campina Grande", 1231, 0);

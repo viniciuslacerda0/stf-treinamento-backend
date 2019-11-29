@@ -20,11 +20,12 @@ import com.money.service.CategoriaService;
 @RestController
 @RequestMapping("/categorias")
 public class CategoriaResource {
+	
 	@Autowired
 	private CategoriaService categoriaService;
 	
 	@GetMapping
-	public ResponseEntity<List<Categoria>> listar(){
+	public ResponseEntity<List<Categoria>> listarCategoria(){
 		
 		List<Categoria> listagem = this.categoriaService.listarCategoria();
 	
@@ -43,14 +44,14 @@ public class CategoriaResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Categoria> cadastrar(@RequestBody Categoria categoria) {
+	public ResponseEntity<Categoria> cadastrarCategoria(@RequestBody Categoria categoria) {
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(this.categoriaService.cadastrarCategoria(categoria));
 		
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Categoria> atualizar(@PathVariable Long id, @RequestBody Categoria categoriaAtualizada){
+	public ResponseEntity<Categoria> atualizarCategoria(@PathVariable Long id, @RequestBody Categoria categoriaAtualizada){
 
 		return ResponseEntity.status(HttpStatus.OK).body(this.categoriaService.atualizarCategoria(id, categoriaAtualizada));
 		

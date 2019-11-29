@@ -11,7 +11,6 @@ import com.money.model.Categoria;
 @Repository
 public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 	
-	public Optional<Categoria> findByNome(String nome);
+	public Optional<Categoria> findCategoria(Categoria categoria);
 	
-	public boolean existsByNome(String nome);
 }
