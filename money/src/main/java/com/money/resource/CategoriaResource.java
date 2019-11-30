@@ -29,11 +29,8 @@ public class CategoriaResource {
 		
 		List<Categoria> listagem = this.categoriaService.listarCategoria();
 	
-		if (listagem.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-		} else {
-			return ResponseEntity.status(HttpStatus.OK).body(listagem);
-		}
+		return ResponseEntity.status(HttpStatus.OK).body(listagem);
+		
 	}
 	
 	@GetMapping("/{id}")

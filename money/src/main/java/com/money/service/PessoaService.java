@@ -24,7 +24,7 @@ public class PessoaService {
 	
 	public Pessoa cadastrarPessoa(Pessoa pessoa) {
 		
-		boolean existePessoa = this.pessoaRepository.findPessoa(pessoa).isPresent();
+		boolean existePessoa = this.pessoaRepository.findById(pessoa.getId()).isPresent();
 		
 		if(existePessoa) {
 			new IllegalArgumentException();

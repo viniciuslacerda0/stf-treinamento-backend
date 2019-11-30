@@ -1,7 +1,6 @@
 package com.money.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ public class CategoriaService {
 	
 	public Categoria cadastrarCategoria(Categoria categoria) {
 		
-		boolean existeCategoria = this.categoriaRepository.findCategoria(categoria).isPresent();
+		boolean existeCategoria = this.categoriaRepository.findById(categoria.getCodigo()).isPresent();
 		
 		if(existeCategoria){
 			throw new IllegalArgumentException();
